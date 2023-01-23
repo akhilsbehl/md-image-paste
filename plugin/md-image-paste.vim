@@ -3,9 +3,12 @@ if !has("python3")
   finish
 endif
 
-if exists('g:sample_python_plugin_loaded')
+if exists('g:md_image_paste_loaded')
   finish
 endif
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
@@ -19,16 +22,13 @@ sys.path.insert(0, python_root_dir)
 import plugin
 EOF
 
-let g:sample_python_plugin_loaded = 1
+let g:md_image_paste_loaded = 1
 
-function! PrintCountry()
-  python3 plugin.print_country()
+function! PasteImage()
+  python3 plugin.PasteImage()
 endfunction
 
 command! -nargs=0 PrintCountry call PrintCountry()
 
-function! InsertCountry()
-  python3 plugin.insert_country()
-endfunction
-
-command! -nargs=0 InsertCountry call InsertCountry()
+let &cpo = s:save_cpo
+unlet s:save_cpo
