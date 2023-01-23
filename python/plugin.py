@@ -1,33 +1,60 @@
-
-print("Hello from Python source code in plugin.py")
-
-import urllib, urllib.request
-import json
-
-try:
-  import vim
-except:
-  print("No vim module available outside vim")
-  pass
-
-def _get(url):
-  return urllib.request.urlopen(url, None, 5).read().strip().decode()
-
-def _get_country():
-  try:
-    ip = _get('http://ipinfo.io/ip')
-    json_location_data = _get('http://api.ip2country.info/ip?%s' % ip)
-    location_data = json.loads(json_location_data)
-    return location_data['countryName']
-  except Exception as e:
-    print('Error in sample plugin (%s)' % (e.msg,))
-
-def print_country():
-  print('You seem to be in %s' % (_get_country(),))
+from datetime import datetime
 
 
-def insert_country():
-  row, col = vim.current.window.cursor
-  current_line = vim.current.buffer[row-1]
-  new_line = current_line[:col] + _get_country() + current_line[col:]
-  vim.current.buffer[row-1] = new_line
+CONFIG = {
+    fig_dir = "./figs",
+    fig_dir_txt = "figs",
+    image_suffix = lambda: f'-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}',
+    affix = "%s",
+}
+
+
+GET_CLIPBOARD_CMD = make_cmd_to_get_cliboard()
+PUT_CLIPBOARD_CMD = make_cmd_to_put_cliboard()
+
+
+def make_cmd_to_get_cliboard():
+    pass
+
+
+def make_cmd_to_put_cliboard():
+    pass
+
+
+def paste_image(alttext):
+
+    content = get_clipboard_content()
+
+    if not is_image(content):
+        vim.notify('There is no image in the clipboard', vim.log.levels.ERROR)
+        return
+
+    image_path = make_image_path()
+    image_anchor = make_image_md_anchor(image_path, alttext)
+
+    try:
+        save_image(content, image_path)
+        write_image_anchor(image_anchor)
+    except Exception as e:
+        vim.notify(str(e), vim.log.levels.ERROR)
+
+
+
+def get_clipboard_content():
+    pass
+
+
+def make_image_path():
+    pass
+
+
+def make_image_md_anchor(image_path, alttext):
+    pass
+
+
+def save_image(content, image_path):
+    pass
+
+
+def write_image_anchor(image_anchor):
+    pass

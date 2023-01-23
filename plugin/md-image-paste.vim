@@ -24,11 +24,11 @@ EOF
 
 let g:md_image_paste_loaded = 1
 
-function! PasteImage()
-  python3 plugin.PasteImage()
+function! PasteImage(alttext)
+  python3 plugin.paste_image(a:alttext)
 endfunction
 
-command! -nargs=0 PrintCountry call PrintCountry()
+command! -nargs=1 PrintCountry call PrintCountry(<f-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
