@@ -1,7 +1,7 @@
 ### Install
 > ❗ Requirements:
 > - **`xclip`** (X11)
-> - **`wl-clipboard`** (Wayland)
+> - **`wl-paste`** (Wayland)
 > - **`powershell`** (Windows / WSL)
 
 User your favorite package manager. I use Vundle.
