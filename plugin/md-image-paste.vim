@@ -24,11 +24,12 @@ EOF
 
 let g:md_image_paste_loaded = 1
 
-function! PasteImage(alttext)
-  python3 plugin.paste_image(a:alttext)
+function! PasteImage()
+  let with_alttext = input("What is the file name / alt-text? ")
+  python3 plugin.paste_image(vim.eval('with_alttext').strip())
 endfunction
 
-command! -nargs=1 PrintCountry call PrintCountry(<f-args>)
+command! -nargs=0 PasteImage call PasteImage()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
